@@ -1,0 +1,58 @@
+/* styles/components/UsernameInput.module.css */
+.container {
+  position: relative;
+  height: 60vh;
+  width: 100%;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.usernameDisplay {
+  background: #FFF2AF;
+  padding: 1.5rem;
+  border-radius: 15px;
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  min-height: 60px;
+}
+
+.lettersContainer {
+  position: relative;
+  height: 100%;
+  background: #DAD2FF;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.letter {
+  position: absolute;
+  background: #493D9E;
+  color: white;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  will-change: top, left;
+  box-shadow: 0 4px 15px rgba(73, 61, 158, 0.2);
+}
+
+.letter:hover {
+  transform: scale(1.4) rotate(15deg);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes drift {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(15px); }
+  100% { transform: translateX(0); }
+}

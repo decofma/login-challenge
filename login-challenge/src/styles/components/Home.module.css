@@ -1,0 +1,36 @@
+.container {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .logo {
+    font-size: 4rem;
+    color: var(--primary);
+    margin-bottom: 3rem;
+    text-shadow: 3px 3px 0 var(--surface);
+  }
+  
+  .ctaButton {
+    background: var(--primary);
+    color: white;
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+  
+  .ctaButton:hover {
+    transform: scale(1.05) rotate(3deg);
+  }
+  
+  .confirmationPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
