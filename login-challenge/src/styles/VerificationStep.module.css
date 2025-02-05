@@ -1,0 +1,63 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+    gap: 3rem;
+  }
+  
+  .title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 3rem;
+    text-shadow: 3px 3px 0 var(--secondary);
+    line-height: 1.2;
+    max-width: 90vw;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .primaryButton {
+    background: linear-gradient(145deg, var(--secondary), #9D8EFF);
+    color: var(--primary);
+    padding: 1.5rem 3rem;
+    border: none;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow);
+  }
+  
+  .primaryButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(178, 165, 255, 0.4);
+  }
+  
+  .popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popupContent {
+    background: var(--background);
+    padding: 3rem;
+    border-radius: 2rem;
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+  }

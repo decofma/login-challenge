@@ -1,12 +1,6 @@
-import { AccountProvider } from '../contexts/AccountContext';
+import type { AppProps } from 'next/app';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: any) {
-  return (
-    <AccountProvider>
-      <Component {...pageProps} />
-    </AccountProvider>
-  );
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
-
-export default MyApp;

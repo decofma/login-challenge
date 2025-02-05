@@ -1,0 +1,52 @@
+.container {
+    background: var(--background);
+    padding: 3rem;
+    border-radius: 2rem;
+    width: 90%;
+    max-width: 800px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .emailInput {
+    background: transparent;
+    border: 3px solid var(--secondary);
+    color: var(--primary);
+    font-size: 1.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    text-align: center;
+    min-width: 200px;
+  }
+  
+  .domainButton {
+    background: var(--secondary);
+    color: var(--primary);
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 180px;
+  }
+  
+  .domainButton:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .spinning {
+    animation: spin 1.5s linear infinite;
+  }

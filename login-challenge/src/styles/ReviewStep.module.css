@@ -1,0 +1,61 @@
+.container {
+    background: 
+      radial-gradient(circle at top left,
+        var(--secondary) -50%,
+        var(--background) 100%
+      );
+  }
+  
+  .dataContainer {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    margin: 3rem 0;
+    border: 2px solid var(--secondary);
+    backdrop-filter: blur(5px);
+  }
+  
+  .dataRow {
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem 0;
+    color: var(--primary);
+    font-size: 1.2rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.8rem;
+  }
+  
+  .checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 3rem 0;
+    color: var(--primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .checkboxLabel:hover {
+    background: rgba(178, 165, 255, 0.1);
+  }
+  
+  .successPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    text-align: center;
+    background: var(--accent);
+    color: var(--primary);
+  }
+  
+  .successPopup h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 0 var(--secondary);
+  }
