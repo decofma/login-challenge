@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import styles from '../styles/Home.module.css';
+import { useState } from "react";
+import styles from "../styles/Home.module.css";
 
 export default function HomePage({ onNext }: { onNext: () => void }) {
   const [showPopup, setShowPopup] = useState(false);
@@ -7,9 +7,9 @@ export default function HomePage({ onNext }: { onNext: () => void }) {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Login Challenge</h1>
-      
+
       <div className={styles.buttonGroup}>
-        <button 
+        <button
           className={styles.primaryButton}
           onClick={() => setShowPopup(true)}
         >
@@ -20,17 +20,14 @@ export default function HomePage({ onNext }: { onNext: () => void }) {
       {showPopup && (
         <div className={styles.popupOverlay}>
           <div className={styles.popupContent}>
-            <p className="text-2xl text-#493D9E font-bold mb-4">
+            <p className={styles.popupTitle}>
               Are you sure you don't want to create an account?
             </p>
-            <div className="flex gap-4 justify-center">
-              <button 
-                className={styles.primaryButton}
-                onClick={onNext}
-              >
+            <div className={styles.buttonGroup}>
+              <button className={styles.secondaryButton} onClick={onNext}>
                 No
               </button>
-              <button 
+              <button
                 className={styles.primaryButton}
                 onClick={() => setShowPopup(false)}
               >

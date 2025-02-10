@@ -1,64 +1,142 @@
-import { useState, useEffect } from 'react';
-import { UserData } from '../types';
-import styles from '../styles/UsernameStep.module.css';
+import { useState, useEffect } from "react";
+import { UserData } from "../types";
+import styles from "../styles/UsernameStep.module.css";
 
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-export default function UsernameStep({ userData, setUserData, onNext }: { 
+export default function UsernameStep({
+  userData,
+  setUserData,
+  onNext,
+}: {
   userData: UserData;
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
   onNext: () => void;
 }) {
-  const [chars, setChars] = useState<Array<{ char: string; x: number; y: number }>>([]);
+  const [chars, setChars] = useState<
+    Array<{ char: string; x: number; y: number }>
+  >([]);
   const [showBotWarning, setShowBotWarning] = useState(false);
-  const [lastChar, setLastChar] = useState('');
-  const [nextlastChar, setNextLastChar] = useState('');
+  const [lastChar, setLastChar] = useState("");
+  const [repeatCount, setRepeatCount] = useState(0);
   const [disabler, setDisabler] = useState(false);
+
   useEffect(() => {
     const newChars = Array.from({ length: 50 }, () => ({
       char: letters[Math.floor(Math.random() * letters.length)],
       x: Math.random() * 90,
-      y: Math.random() * 90
+      y: Math.random() * 90,
     }));
     setChars(newChars);
 
     const interval = setInterval(() => {
-      setChars(prev => prev.map(c => ({
-        ...c,
-        x: (c.x + Math.random() * 4 - 2) % 100,
-        y: (c.y + Math.random() * 4 - 2) % 100
-      })));
+      setChars((prev) =>
+        prev.map((c) => ({
+          ...c,
+          x: (c.x + Math.random() * 6 - 3) % 100,
+          y: (c.y + Math.random() * 6 - 3) % 100,
+        }))
+      );
     }, 100);
 
     return () => clearInterval(interval);
   }, []);
 
+  const shuffleLetters = () => {
+    setChars((prev) =>
+      prev.map((c) => ({
+        char: letters[Math.floor(Math.random() * letters.length)],
+        x: Math.random() * 90,
+        y: Math.random() * 90,
+      }))
+    );
+  };
+
   const handleCharClick = (char: string) => {
     if (userData.username.length >= 10) return;
-    
+
     if (char === lastChar) {
+      setRepeatCount((prev) => prev + 1);
+    } else {
+      setRepeatCount(1);
+    }
+
+    if (repeatCount >= 2) {
       setShowBotWarning(true);
       setDisabler(true);
       return;
     }
 
     setLastChar(char);
-    setUserData(prev => ({ 
-      ...prev, 
-      username: prev.username + char 
+    setUserData((prev) => ({
+      ...prev,
+      username: prev.username + char,
     }));
+
+    // Reorganiza as letras
+    shuffleLetters();
+
+    // Movimento extra após seleção
+    setTimeout(() => {
+      setChars((prev) =>
+        prev.map((c) => ({
+          ...c,
+          x: (c.x + Math.random() * 40 - 20) % 100,
+          y: (c.y + Math.random() * 40 - 20) % 100,
+        }))
+      );
+    }, 50);
+  };
+
+  const handleDelete = () => {
+    if (userData.username.length === 0) return;
+
+    // Animação de reset
+    setChars((prev) =>
+      prev.map((c) => ({
+        ...c,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        char: letters[Math.floor(Math.random() * letters.length)],
+      }))
+    );
+
+    setUserData((prev) => ({ ...prev, username: "" }));
+    setLastChar("");
+    setRepeatCount(0);
+    setDisabler(false);
+
+    // Mensagens aleatórias
+    const messages = [
+      "POOF! All gone!",
+      "Whoosh! Vanished!",
+      "Et tu, Brute?",
+      "Ctrl+Z me if you can!",
+      "Delete level: Ninja",
+      "O-oh.. too late :/",
+      "Brrr! It's gone!",
+      "Poof! It's gone!",
+      "Where is my username?!",
+    ];
+    alert(messages[Math.floor(Math.random() * messages.length)]);
   };
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Create Username</h2>
-      
+      <h2 className={styles.title}>
+        Create Username {userData.username.length}/10
+      </h2>
+
       <div className={styles.lettersContainer}>
         {chars.map((c, i) => (
           <div
             key={i}
             className={styles.letter}
-            style={{ left: `${c.x}%`, top: `${c.y}%` }}
+            style={{
+              left: `${c.x}%`,
+              top: `${c.y}%`,
+              transition: "all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+            }}
             onClick={() => handleCharClick(c.char)}
           >
             {c.char}
@@ -66,36 +144,53 @@ export default function UsernameStep({ userData, setUserData, onNext }: {
         ))}
       </div>
 
-      <div className={styles.preview}>
-        {userData.username.padEnd(6, '_').slice(0, 6)}
+      <div className={styles.previewWrapper}>
+        <div className={styles.preview}>
+          {userData.username.padEnd(10, "_").slice(0, 10)}
+        </div>
       </div>
-
-      <div className="action-buttons">
+      <div className={styles.buttonGroup}>
         <button
-          className={`primary-button ${userData.username.length < 4 ? 'disabled' : ''}`}
+          className={styles.secondaryButton}
+          onClick={handleDelete}
+          disabled={userData.username.length === 0}
+        >
+          Erase
+        </button>
+        <button
+          className={`${styles.primaryButton} ${
+            userData.username.length < 4 ? "disabled" : ""
+          }`}
           onClick={onNext}
           disabled={userData.username.length < 4 || disabler}
         >
-          Next {userData.username.length}/10
+          Next
         </button>
       </div>
+
       {showBotWarning && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <p className="text-2xl text-#493D9E font-bold mb-4">🤖 Robot Detected!</p>
-            <p className="text-#493D9E mb-6">Humans don't repeat the same character!</p>
-            <div className="action-buttons">
-              <button 
-                className="secondary-button"
+        <div className={styles.popupOverlay}>
+          <div className={styles.popupContent}>
+            <p className={styles.popupTitle}>🤖 Robot Detected!</p>
+            <p className={styles.popupText}>
+              Humans don't repeat the same character 3 times!
+            </p>
+            <div className={styles.buttonGroup}>
+              <button
+                className={styles.secondaryButton}
+                onClick={() => {
+                  setShowBotWarning(false);
+                  setRepeatCount(1);
+                  setDisabler(false);
+                }}
+              >
+                I'm human
+              </button>
+              <button
+                className={styles.primaryButton}
                 onClick={() => window.location.reload()}
               >
-                Start Over
-              </button>
-              <button 
-                className="primary-button"
-                onClick={() => setShowBotWarning(false)}
-              >
-                I'm Human!
+                I'm sorry
               </button>
             </div>
           </div>

@@ -1,94 +1,197 @@
-import { useState, useEffect, useCallback } from 'react';
-import { UserData } from '../types';
-import styles from '../styles/PasswordConfirmationStep.module.css';
+import { useState, useEffect, useCallback, useRef } from "react";
+import { UserData } from "../types";
+import styles from "../styles/PasswordConfirmationStep.module.css";
 
-export default function PasswordConfirmationStep({ userData, setUserData, onNext }: { 
+interface Props {
   userData: UserData;
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
   onNext: () => void;
-}) {
-  const [input, setInput] = useState('');
-  const [numbers, setNumbers] = useState<number[]>([]);
-  const [isRevealed, setIsRevealed] = useState(false);
-  const [isShuffling, setIsShuffling] = useState(false);
-  const [showResult, setShowResult] = useState<'success' | 'error' | null>(null);
+}
 
-  const shuffleNumbers = useCallback(() => {
-    setIsShuffling(true);
-    const newNumbers = Array.from({ length: 10 }, (_, i) => i).sort(() => Math.random() - 0.5);
-    setNumbers(newNumbers);
-    
-    setTimeout(() => {
-      setIsShuffling(false);
-      setIsRevealed(true);
-      setTimeout(() => {
-        setIsRevealed(false);
-        shuffleNumbers();
-      }, 2000);
-    }, 1000);
-  }, []);
+export default function PasswordConfirmationStep({ userData, onNext }: Props) {
+  const [numbers, setNumbers] = useState<number[]>([]);
+  const [selectedDigits, setSelectedDigits] = useState<string[]>([]);
+  const [showNumbers, setShowNumbers] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [currentStep, setCurrentStep] = useState(0);
+  const timeoutRef = useRef<NodeJS.Timeout[]>([]);
+  const positionsRef = useRef<DOMRect[]>([]);
+
+  const difficultyConfig = [
+    { shuffles: 3, speed: 500, visibleTime: 1500 },
+    { shuffles: 9, speed: 300, visibleTime: 1000 },
+    { shuffles: 21, speed: 100, visibleTime: 500 },
+  ];
 
   useEffect(() => {
-    shuffleNumbers();
-  }, [shuffleNumbers]);
+    setNumbers(Array.from({ length: 10 }, (_, i) => i));
+    return () => timeoutRef.current.forEach(clearTimeout);
+  }, []);
 
-  const handleCardClick = (num: number) => {
-    if (isRevealed && !isShuffling && input.length < 4) {
-      setInput(prev => prev + num.toString());
+  const validateDigit = (digit: number) =>
+    digit === Number(userData.password[currentStep]);
+
+  const animateWave = useCallback(async () => {
+    const cards = Array.from(document.querySelectorAll(`.${styles.card}`));
+
+    cards.forEach((card, index) => {
+      timeoutRef.current.push(
+        setTimeout(() => {
+          card.classList.add(styles.wave);
+          setTimeout(() => card.classList.remove(styles.wave), 500);
+        }, index * 100)
+      );
+    });
+
+    await new Promise((r) => setTimeout(r, cards.length * 100 + 500));
+  }, []);
+
+  const animateFLIP = useCallback(async (speed: number) => {
+    const cards = Array.from(document.querySelectorAll(`.${styles.card}`));
+
+    await new Promise((r) => setTimeout(r, 50));
+    const finalPositions = cards.map((card) => card.getBoundingClientRect());
+
+    cards.forEach((card, index) => {
+      const initial = positionsRef.current[index];
+      const final = finalPositions[index];
+
+      if (!initial || !final) return;
+
+      const deltaX = initial.left - final.left;
+      const deltaY = initial.top - final.top;
+
+      (
+        card as HTMLElement
+      ).style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      (card as HTMLElement).style.transition = "transform 0s";
+
+      requestAnimationFrame(() => {
+        (card as HTMLElement).style.transform = "";
+        (
+          card as HTMLElement
+        ).style.transition = `transform ${speed}ms ease-in-out`;
+      });
+    });
+  }, []);
+
+  const shuffleCards = useCallback(
+    async (shuffles: number, speed: number) => {
+      await animateWave();
+
+      for (let i = 0; i < shuffles; i++) {
+        positionsRef.current = Array.from(
+          document.querySelectorAll(`.${styles.card}`)
+        ).map((card) => card.getBoundingClientRect());
+
+        setNumbers((prev) => [...prev].sort(() => Math.random() - 0.5));
+        await animateFLIP(speed);
+        await new Promise((r) => setTimeout(r, speed));
+      }
+    },
+    [animateFLIP, animateWave]
+  );
+
+  const handleCardClick = async (num: number) => {
+    if (isAnimating) return;
+
+    if (!validateDigit(num)) {
+      setShowError(true);
+      return;
+    }
+
+    const newSelected = [...selectedDigits, num.toString()];
+    setSelectedDigits(newSelected);
+
+    if (newSelected.length === userData.password.length) {
+      setShowSuccess(true);
+      return;
+    }
+
+    if (currentStep < difficultyConfig.length) {
+      setIsAnimating(true);
+      setShowNumbers(true);
+
+      const config = difficultyConfig[currentStep];
+      await shuffleCards(config.shuffles, config.speed);
+
+      timeoutRef.current.push(
+        setTimeout(() => {
+          setShowNumbers(false);
+          setIsAnimating(false);
+          setCurrentStep((prev) => prev + 1);
+        }, config.visibleTime)
+      );
+    } else {
+      setIsAnimating(true);
+      timeoutRef.current.push(
+        setTimeout(() => {
+          setShowNumbers(false);
+          setIsAnimating(false);
+          setCurrentStep((prev) => prev + 1);
+        }, 1000)
+      );
     }
   };
 
-  useEffect(() => {
-    if (input.length === 4) {
-      if (input === userData.password) {
-        setShowResult('success');
-      } else {
-        setShowResult('error');
-        setTimeout(() => {
-          setInput('');
-          shuffleNumbers();
-          setShowResult(null);
-        }, 2000);
-      }
-    }
-  }, [input]);
-
+  const resetProcess = () => {
+    setShowError(false);
+    setSelectedDigits([]);
+    setCurrentStep(0);
+    setShowNumbers(true);
+    setNumbers(Array.from({ length: 10 }, (_, i) => i));
+  };
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Confirm PIN</h2>
-      
-      <div className={styles.preview}>
-        {input.split('').map(() => '•').join(' ')}
+      <h1 className={styles.title}>Confirm Password</h1>
+
+      <div className={styles.passwordPreview}>
+        {userData.password.split("").map((_, i) => (
+          <span key={i} className={styles.previewDigit}>
+            {i < selectedDigits.length ? selectedDigits[i] : "•"}
+          </span>
+        ))}
       </div>
 
       <div className={styles.cardGrid}>
-        {numbers.map((num, index) => (
+        {numbers.map((num, i) => (
           <div
-            key={index}
-            className={`${styles.card} ${!isRevealed ? styles.cardHidden : ''} ${
-              isShuffling ? styles.shuffling : ''
-            }`}
+            key={i}
+            className={`${styles.card} ${showNumbers ? "" : styles.hidden}`}
             onClick={() => handleCardClick(num)}
           >
-            {num}
+            <div className={styles.cardFront}>{num}</div>
+            <div className={styles.cardBack}>?</div>
           </div>
         ))}
       </div>
 
-      {showResult && (
+      {showError && (
         <div className={styles.popupOverlay}>
-          <div className={styles.resultPopup}>
-            <p className={styles.resultText}>
-              {showResult === 'success' ? '🎉 YEY! Passwords match!' : '😱 O-OH! Wrong PIN!'}
-            </p>
-            <div className={styles.buttonGroup}>
-              <button
-                className={styles.primaryButton}
-                onClick={showResult === 'success' ? onNext : shuffleNumbers}
-              >
-                {showResult === 'success' ? 'Continue' : 'Try Again'}
-              </button>
-            </div>
+          <div className={styles.popupContent}>
+            <h2 className={styles.popupTitle}>Incorrect Password!</h2>
+            <button className={styles.button} onClick={resetProcess}>
+              Try Again
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showSuccess && (
+        <div className={styles.popupOverlay}>
+          <div className={styles.popupContent}>
+            <h2 className={styles.popupTitle}>🎉 Password Correct!</h2>
+            <button
+              className={styles.button}
+              onClick={() => {
+                setShowSuccess(false);
+                onNext();
+              }}
+            >
+              Next
+            </button>
           </div>
         </div>
       )}

@@ -1,15 +1,19 @@
-import { useState, useEffect } from 'react';
-import { UserData } from '../types';
-import { emailDomains } from '../utils/emailDomains';
-import styles from '../styles/EmailStep.module.css';
+import { useState, useEffect } from "react";
+import { UserData } from "../types";
+import { emailDomains } from "../utils/emailDomains";
+import styles from "../styles/EmailStep.module.css";
 
-export default function EmailStep({ userData, setUserData, onNext }: { 
+export default function EmailStep({
+  userData,
+  setUserData,
+  onNext,
+}: {
   userData: UserData;
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
   onNext: () => void;
 }) {
-  const [localPart, setLocalPart] = useState('');
-  const [domain, setDomain] = useState('');
+  const [localPart, setLocalPart] = useState("");
+  const [domain, setDomain] = useState("");
   const [spinning, setSpinning] = useState(false);
 
   const spinDomain = () => {
@@ -22,14 +26,14 @@ export default function EmailStep({ userData, setUserData, onNext }: {
 
   useEffect(() => {
     if (localPart && domain) {
-      setUserData(prev => ({ ...prev, email: `${localPart}@${domain}` }));
+      setUserData((prev) => ({ ...prev, email: `${localPart}@${domain}` }));
     }
   }, [localPart, domain]);
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Create Email</h2>
-      
+
       <div className={styles.inputGroup}>
         <input
           type="text"
@@ -41,10 +45,12 @@ export default function EmailStep({ userData, setUserData, onNext }: {
         <span className={styles.atSymbol}>@</span>
         <button
           onClick={spinDomain}
-          className={`${styles.domainButton} ${spinning ? styles.spinning : ''}`}
+          className={`${styles.domainButton} ${
+            spinning ? styles.spinning : ""
+          }`}
           disabled={spinning}
         >
-          {domain || 'Choose Domain'}
+          {domain || "Choose Domain"}
         </button>
       </div>
 
@@ -53,7 +59,7 @@ export default function EmailStep({ userData, setUserData, onNext }: {
         onClick={onNext}
         disabled={!localPart || !domain}
       >
-        Next Step ✉️
+        Next
       </button>
     </div>
   );

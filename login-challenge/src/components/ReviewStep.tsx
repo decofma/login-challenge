@@ -1,8 +1,11 @@
-import { useState } from 'react';
-import { UserData } from '../types';
-import styles from '../styles/ReviewStep.module.css';
+import { useState } from "react";
+import { UserData } from "../types";
+import styles from "../styles/ReviewStep.module.css";
 
-export default function ReviewStep({ userData, onNext }: { 
+export default function ReviewStep({
+  userData,
+  onNext,
+}: {
   userData: UserData;
   onNext: () => void;
 }) {
@@ -12,7 +15,7 @@ export default function ReviewStep({ userData, onNext }: {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Final Review</h2>
-      
+
       <div className={styles.dataContainer}>
         <div className={styles.dataRow}>
           <span>Username:</span>
@@ -31,17 +34,19 @@ export default function ReviewStep({ userData, onNext }: {
           <span>{userData.birthday}</span>
         </div>
       </div>
-
-      <label className={styles.checkboxLabel}>
+      <label className={styles.checkboxWrapper}>
         <input
           type="checkbox"
+          className={styles.checkboxInput}
           checked={!accepted}
           onChange={(e) => setAccepted(!e.target.checked)}
-          className={styles.checkbox}
         />
-        I definitely don't agree to the Terms & Conditions.
+        <span className={styles.checkboxVisual} />
+        <span className={styles.checkboxLabel}>
+          {" "}
+          I definitely don't agree to the Terms & Conditions.
+        </span>
       </label>
-
       <button
         className={styles.primaryButton}
         onClick={() => setShowSuccess(true)}
@@ -52,13 +57,19 @@ export default function ReviewStep({ userData, onNext }: {
 
       {showSuccess && (
         <div className={styles.popupOverlay}>
-          <div className={styles.successPopup}>
-            <h3>🎉 Account Created!</h3>
+          <div className={styles.popupContent}>
+            <h3 className={styles.popupTitle}>🎉 Account Created!</h3>
             <div className={styles.buttonGroup}>
-              <button className={styles.secondaryButton} onClick={() => window.location.reload()}>
+              <button
+                className={styles.secondaryButton}
+                onClick={() => window.location.reload()}
+              >
                 Cancel
               </button>
-              <button className={styles.primaryButton} onClick={onNext}>
+              <button
+                className={styles.primaryButton}
+                onClick={() => window.location.reload()}
+              >
                 Continue
               </button>
             </div>

@@ -1,39 +1,54 @@
-import { useState } from 'react';
-import { UserData } from '../types';
-import styles from '../styles/PasswordStep.module.css';
+import { useState } from "react";
+import { UserData } from "../types";
+import styles from "../styles/PasswordStep.module.css";
 
-export default function PasswordStep({ userData, setUserData, onNext }: { 
+export default function PasswordStep({
+  userData,
+  setUserData,
+  onNext,
+}: {
   userData: UserData;
   setUserData: React.Dispatch<React.SetStateAction<UserData>>;
   onNext: () => void;
 }) {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState("");
 
   const handleNumberClick = (num: string) => {
-    if (password.length < 4) {
+    if (num === "<") {
+      const newPass = password.slice(0, -1);
+      setPassword(newPass);
+      setUserData((prev) => ({ ...prev, password: newPass }));
+    } else if (num === "ok") {
+      onNext();
+    } else if (password.length < 4) {
       const newPass = password + num;
       setPassword(newPass);
-      setUserData(prev => ({ ...prev, password: newPass }));
+      setUserData((prev) => ({ ...prev, password: newPass }));
     }
   };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Create PIN</h2>
-      
+
       <div className={styles.preview}>
-        {password.split('').map(() => '•').join(' ')}
+        {password
+          .split("")
+          .map(() => "•")
+          .join(" ")}
       </div>
 
       <div className={styles.numberGrid}>
-        {[1,2,3,4,5,6,7,8,9,'⌫',0,'✓'].map((num) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, "<", 0, "ok"].map((num) => (
           <button
             key={num}
-            className={`${styles.numberButton} ${num === '✓' ? styles.confirmButton : ''}`}
-            onClick={() => num === '✓' ? onNext() : handleNumberClick(num.toString())}
+            className={`${styles.numberButton} ${
+              num === "ok" ? styles.confirmButton : ""
+            }`}
+            onClick={() => handleNumberClick(num.toString())}
             disabled={
-              (num === '✓' && password.length !== 4) ||
-              (num === '⌫' && password.length === 0)
+              (num === "ok" && password.length !== 4) ||
+              (num === "<" && password.length === 0)
             }
           >
             {num}
