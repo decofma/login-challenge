@@ -21,7 +21,7 @@ export default function HomePage({ onNext }: { onNext: () => void }) {
         <div className={styles.popupOverlay}>
           <div className={styles.popupContent}>
             <p className={styles.popupTitle}>
-              Are you sure you don't want to create an account?
+              Are you sure you don`&apos;`t want to create an account?
             </p>
             <div className={styles.buttonGroup}>
               <button className={styles.secondaryButton} onClick={onNext}>

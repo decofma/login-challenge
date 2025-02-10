@@ -43,13 +43,11 @@ export default function UsernameStep({
   }, []);
 
   const shuffleLetters = () => {
-    setChars((prev) =>
-      prev.map((c) => ({
-        char: letters[Math.floor(Math.random() * letters.length)],
-        x: Math.random() * 90,
-        y: Math.random() * 90,
-      }))
-    );
+    setChars(prev => prev.map(() => ({
+      char: letters[Math.floor(Math.random() * letters.length)],
+      x: Math.random() * 90,
+      y: Math.random() * 90
+    })));
   };
 
   const handleCharClick = (char: string) => {
@@ -73,10 +71,7 @@ export default function UsernameStep({
       username: prev.username + char,
     }));
 
-    // Reorganiza as letras
     shuffleLetters();
-
-    // Movimento extra após seleção
     setTimeout(() => {
       setChars((prev) =>
         prev.map((c) => ({
@@ -91,7 +86,6 @@ export default function UsernameStep({
   const handleDelete = () => {
     if (userData.username.length === 0) return;
 
-    // Animação de reset
     setChars((prev) =>
       prev.map((c) => ({
         ...c,
@@ -106,7 +100,6 @@ export default function UsernameStep({
     setRepeatCount(0);
     setDisabler(false);
 
-    // Mensagens aleatórias
     const messages = [
       "POOF! All gone!",
       "Whoosh! Vanished!",
@@ -173,7 +166,7 @@ export default function UsernameStep({
           <div className={styles.popupContent}>
             <p className={styles.popupTitle}>🤖 Robot Detected!</p>
             <p className={styles.popupText}>
-              Humans don't repeat the same character 3 times!
+              Humans don`&apos;`t repeat the same character 3 times!
             </p>
             <div className={styles.buttonGroup}>
               <button
@@ -184,13 +177,13 @@ export default function UsernameStep({
                   setDisabler(false);
                 }}
               >
-                I'm human
+                I`&apos;`m human
               </button>
               <button
                 className={styles.primaryButton}
                 onClick={() => window.location.reload()}
               >
-                I'm sorry
+                I`&apos;`m sorry
               </button>
             </div>
           </div>

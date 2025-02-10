@@ -4,7 +4,7 @@ import styles from "../styles/ReviewStep.module.css";
 
 export default function ReviewStep({
   userData,
-  onNext,
+  // onNext,
 }: {
   userData: UserData;
   onNext: () => void;
@@ -44,7 +44,7 @@ export default function ReviewStep({
         <span className={styles.checkboxVisual} />
         <span className={styles.checkboxLabel}>
           {" "}
-          I definitely don't agree to the Terms & Conditions.
+          I definitely don`&apos;`t agree to the Terms & Conditions.
         </span>
       </label>
       <button

@@ -3,7 +3,7 @@ import { UserData } from "../types";
 import styles from "../styles/PasswordStep.module.css";
 
 export default function PasswordStep({
-  userData,
+  // userData,
   setUserData,
   onNext,
 }: {

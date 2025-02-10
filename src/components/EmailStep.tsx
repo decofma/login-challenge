@@ -4,7 +4,7 @@ import { emailDomains } from "../utils/emailDomains";
 import styles from "../styles/EmailStep.module.css";
 
 export default function EmailStep({
-  userData,
+  // userData,
   setUserData,
   onNext,
 }: {
