@@ -1,6 +1,6 @@
 # 🎮 Login Challenge: The Most Annoyingly Secure Auth Flow Ever Built 🔐  
 
-![Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2x0Y3R5Z2V2d2VxY2R4bWZ4Z2N5eHl5Y2JodjJ6bGZ5b2V0M3N6ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKsQ8RqFkL5QyW4/giphy.gif)  
+![Demo](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNTh1eWVlMHE5dzdqbDYzaXJwMDM2ZmMyajRsYTRyOTAzanBuMTUzdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/j4rPM934CLIvC/giphy.gif)  
 
 **A brutally hilarious authentication experience** that combines security theater, dark UX patterns, and pure chaos. Not for the faint of heart! 💥  
 
@@ -40,13 +40,12 @@
 ```bash  
 git clone https://github.com/your-username/login-challenge-from-hell.git  
 cd login-challenge-from-hell  
-Install dependencies (you'll need coffee ☕)
 ```
+2.**Install dependencies (you'll need coffee ☕)**
 ```bash
 npm install  
-Start the development server (muhahaha!)
 ```
-
+3.**Start the development server (muhahaha!)**
 ```bash
 npm run dev
 ```
