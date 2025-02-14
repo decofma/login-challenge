@@ -10,8 +10,6 @@ export default function TermsStep({ onNext }: { onNext: () => void }) {
   const termsRef = useRef<HTMLDivElement>(null);
   const checkboxRef = useRef<HTMLInputElement>(null);
 
-  const termsText = "Terms of Use: Welc";
-  const screamText = "AAAaaaahAaa";
   const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ";
 
   useEffect(() => {

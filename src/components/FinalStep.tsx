@@ -4,7 +4,6 @@ import styles from "../styles/FinalStep.module.css";
 
 export default function FinalStep() {
   const [achievements, setAchievements] = useState<string[]>([]);
-  const [showSecret, setShowSecret] = useState(false);
 
   useEffect(() => {
     // Simular carregamento de conquistas
@@ -44,14 +43,9 @@ export default function FinalStep() {
 
   useEffect(() => {
     handleConfetti();
-    const audio = new Audio("/sounds/victory.mp3"); // Adicione um som de vitória
+    const audio = new Audio("/sounds/parabains.mp3");
     audio.play();
 
-    const secretTimeout = setTimeout(() => {
-      setShowSecret(true);
-    }, 10000);
-
-    return () => clearTimeout(secretTimeout);
   }, []);
 
   return (

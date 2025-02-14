@@ -80,7 +80,7 @@ export default function EvilFormStep({ onNext }: { onNext: () => void }) {
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.inputGroup}>
-          <label>Blood Type (Don't select anything!)</label>
+          <label>Blood Type (Don&apos;t select anything!)</label>
           <div className={styles.bloodGrid}>
             {bloodTypes.map((type) => (
               <button
@@ -116,7 +116,7 @@ export default function EvilFormStep({ onNext }: { onNext: () => void }) {
             onChange={(e) =>
               setFormData({ ...formData, teacherName: e.target.value })
             }
-            placeholder="First teacher's middle name (Nope!)"
+            placeholder="First teacher&apos;s middle name (Nope!)"
             className={styles.input}
           />
         </div>
@@ -128,7 +128,7 @@ export default function EvilFormStep({ onNext }: { onNext: () => void }) {
             onChange={(e) =>
               setFormData({ ...formData, secretCode: e.target.value })
             }
-            placeholder="TOP-SECRET CODE (Don't even try!)"
+            placeholder="TOP-SECRET CODE (Don&apos;t even try!)"
             className={styles.input}
             maxLength={7}
             style={{ width: "150px", fontSize: "0.8em" }}
