@@ -4,7 +4,7 @@ import styles from "../styles/ReviewStep.module.css";
 
 export default function ReviewStep({
   userData,
-  // onNext,
+  onNext,
 }: {
   userData: UserData;
   onNext: () => void;
@@ -44,7 +44,7 @@ export default function ReviewStep({
         <span className={styles.checkboxVisual} />
         <span className={styles.checkboxLabel}>
           {" "}
-          I definitely don`&apos;`t agree to the Terms & Conditions.
+          I definitely don&apos;t agree to the Terms & Conditions.
         </span>
       </label>
       <button
@@ -58,19 +58,12 @@ export default function ReviewStep({
       {showSuccess && (
         <div className={styles.popupOverlay}>
           <div className={styles.popupContent}>
-            <h3 className={styles.popupTitle}>🎉 Account Created!</h3>
+            <h3 className={styles.popupTitle}>
+              How dare you accept our terms without reading them properly?!
+            </h3>
             <div className={styles.buttonGroup}>
-              <button
-                className={styles.secondaryButton}
-                onClick={() => window.location.reload()}
-              >
-                Cancel
-              </button>
-              <button
-                className={styles.primaryButton}
-                onClick={() => window.location.reload()}
-              >
-                Continue
+              <button className={styles.primaryButton} onClick={onNext}>
+                FINE, SHOW ME THE TERMS
               </button>
             </div>
           </div>

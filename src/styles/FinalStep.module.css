@@ -1,0 +1,135 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  gap: 3rem;
+}
+
+.title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 3rem;
+  text-shadow: 3px 3px 0 var(--third);
+  line-height: 1.2;
+  max-width: 90vw;
+  animation: glow 10s infinite alternate ease-in-out;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.subtitle {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.5rem;
+  color: #7b68ee;
+  margin-bottom: 3rem;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #ff69b4;
+  }
+  to {
+    text-shadow: 0 0 20px #7b68ee;
+  }
+}
+
+.stats {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.stat {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 15px;
+  min-width: 200px;
+        font-family: "Press Start 2P", cursive;
+  animation: slideIn 0.5s ease-out;
+}
+
+.number {
+  display: block;
+  font-size: 3rem;
+  color: #55ff55;
+  font-family: "Press Start 2P", cursive;
+}
+
+.label {
+  font-size: 0.9rem;
+  font-family: "Press Start 2P", cursive;
+}
+
+.achievements {
+    font-family: "Press Start 2P", cursive;
+}
+
+.achievement {
+  font-family: "Press Start 2P", cursive;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  background: rgba(123, 104, 238, 0.2);
+  border-radius: 8px;
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.restartButton {
+  background: linear-gradient(145deg, var(--secondary), #9d8eff);
+  font-family: "Press Start 2P", cursive;
+  color: var(--primary);
+  padding: 1.5rem 3rem;
+  margin: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.restartButton:hover {
+  background: linear-gradient(45deg, #ff0000, #ff69b4);
+  color: #ff69b4;
+  transform: scale(1.1) rotate(5deg);
+}
+
+.secret {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  animation: reveal 2s ease-out;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-10px) rotate(0deg);
+  }
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}

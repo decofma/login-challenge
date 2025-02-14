@@ -22,7 +22,7 @@ export default function UsernameStep({
   const [disabler, setDisabler] = useState(false);
 
   useEffect(() => {
-    const newChars = Array.from({ length: 50 }, () => ({
+    const newChars = Array.from({ length: 75 }, () => ({
       char: letters[Math.floor(Math.random() * letters.length)],
       x: Math.random() * 90,
       y: Math.random() * 90,
@@ -33,8 +33,8 @@ export default function UsernameStep({
       setChars((prev) =>
         prev.map((c) => ({
           ...c,
-          x: (c.x + Math.random() * 6 - 3) % 100,
-          y: (c.y + Math.random() * 6 - 3) % 100,
+          x: Math.min(Math.max(c.x + Math.random() * 6 - 3, 2), 88), // Limita entre 2% e 88%
+          y: Math.min(Math.max(c.y + Math.random() * 6 - 3, 2), 88), // Limita entre 2% e 88%
         }))
       );
     }, 100);
@@ -43,11 +43,13 @@ export default function UsernameStep({
   }, []);
 
   const shuffleLetters = () => {
-    setChars(prev => prev.map(() => ({
-      char: letters[Math.floor(Math.random() * letters.length)],
-      x: Math.random() * 90,
-      y: Math.random() * 90
-    })));
+    setChars((prev) =>
+      prev.map(() => ({
+        char: letters[Math.floor(Math.random() * letters.length)],
+        x: Math.random() * 85 + 5, // Entre 5% e 90%
+        y: Math.random() * 85 + 5, // Entre 5% e 90%
+      }))
+    );
   };
 
   const handleCharClick = (char: string) => {
@@ -76,8 +78,8 @@ export default function UsernameStep({
       setChars((prev) =>
         prev.map((c) => ({
           ...c,
-          x: (c.x + Math.random() * 40 - 20) % 100,
-          y: (c.y + Math.random() * 40 - 20) % 100,
+          x: Math.min(Math.max(c.x + Math.random() * 40 - 20, 2), 88),
+          y: Math.min(Math.max(c.y + Math.random() * 40 - 20, 2), 88),
         }))
       );
     }, 50);
@@ -166,7 +168,7 @@ export default function UsernameStep({
           <div className={styles.popupContent}>
             <p className={styles.popupTitle}>🤖 Robot Detected!</p>
             <p className={styles.popupText}>
-              Humans don`&apos;`t repeat the same character 3 times!
+              Humans don&apos;t repeat the same character 3 times!
             </p>
             <div className={styles.buttonGroup}>
               <button
@@ -177,13 +179,13 @@ export default function UsernameStep({
                   setDisabler(false);
                 }}
               >
-                I`&apos;`m human
+                I&apos;m human
               </button>
               <button
                 className={styles.primaryButton}
                 onClick={() => window.location.reload()}
               >
-                I`&apos;`m sorry
+                I&apos;m sorry
               </button>
             </div>
           </div>

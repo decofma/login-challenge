@@ -4,7 +4,6 @@ import { emailDomains } from "../utils/emailDomains";
 import styles from "../styles/EmailStep.module.css";
 
 export default function EmailStep({
-  // userData,
   setUserData,
   onNext,
 }: {
@@ -50,7 +49,7 @@ export default function EmailStep({
           }`}
           disabled={spinning}
         >
-          {domain || "Choose Domain"}
+          {domain || "Spin for Domain"}
         </button>
       </div>
 

@@ -1,0 +1,172 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  text-align: center;
+  gap: 3rem;
+}
+
+.title {
+  font-family: "Press Start 2P", cursive;
+  font-size: 3rem;
+  text-shadow: 3px 3px 0 var(--third);
+  line-height: 1.2;
+  max-width: 90vw;
+}
+.subtitle {
+  text-align: center;
+  color: #7b68ee;
+  margin-bottom: 2rem;
+}
+
+.errorMessage {
+  background: #ff5555;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: appear 0.5s;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inputGroup {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 2px solid #7b68ee;
+  border-radius: 20px;
+  background: #333;
+  color: white;
+  transition: all 0.3s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow: 0 0 15px #ff69b4;
+}
+
+.bloodGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.bloodBtn {
+  padding: 0.5rem;
+  border: 2px solid #ff69b4;
+  border-radius: 10px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.bloodBtn:hover {
+  background: #ff69b4;
+  transform: rotate(5deg);
+}
+
+.selected {
+  background: #ff69b4;
+  transform: scale(1.1);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  position: relative;
+  padding: 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.fakeButton {
+  padding: 1.5rem;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(45deg, #7b68ee, #ff69b4);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
+}
+
+.fakeButton[disabled] {
+  background: #666 !important;
+  cursor: not-allowed;
+}
+
+.realButton {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 15px;
+  background: #55ff55;
+  color: black;
+  cursor: pointer;
+  opacity: 1;
+  flex: 1;
+}
+
+.realButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #666 !important;
+}
+
+.hiddenReset {
+  position: absolute;
+  bottom: -50px;
+  right: 10px;
+  opacity: 0.1;
+  transition: opacity 0.3s;
+}
+
+.hiddenReset:hover {
+  opacity: 1;
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  75% {
+    transform: translateX(-10px);
+  }
+}

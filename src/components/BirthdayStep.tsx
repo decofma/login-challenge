@@ -3,7 +3,6 @@ import { UserData } from "../types";
 import styles from "../styles/BirthdayStep.module.css";
 
 export default function BirthdayStep({
-  // userData,
   setUserData,
   onNext,
 }: {

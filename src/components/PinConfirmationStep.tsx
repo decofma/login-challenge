@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { UserData } from "../types";
-import styles from "../styles/PasswordConfirmationStep.module.css";
+import styles from "../styles/PinConfirmationStep.module.css";
 
 interface Props {
   userData: UserData;
@@ -8,7 +8,7 @@ interface Props {
   onNext: () => void;
 }
 
-export default function PasswordConfirmationStep({ userData, onNext }: Props) {
+export default function PinConfirmationStep({ userData, onNext }: Props) {
   const [numbers, setNumbers] = useState<number[]>([]);
   const [selectedDigits, setSelectedDigits] = useState<string[]>([]);
   const [showNumbers, setShowNumbers] = useState(true);
@@ -145,7 +145,7 @@ export default function PasswordConfirmationStep({ userData, onNext }: Props) {
   };
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Confirm Password</h1>
+      <h1 className={styles.title}>Confirm Pin</h1>
 
       <div className={styles.passwordPreview}>
         {userData.password.split("").map((_, i) => (
@@ -171,7 +171,7 @@ export default function PasswordConfirmationStep({ userData, onNext }: Props) {
       {showError && (
         <div className={styles.popupOverlay}>
           <div className={styles.popupContent}>
-            <h2 className={styles.popupTitle}>Incorrect Password!</h2>
+            <h2 className={styles.popupTitle}>Incorrect Pin!</h2>
             <button className={styles.button} onClick={resetProcess}>
               Try Again
             </button>
@@ -182,7 +182,7 @@ export default function PasswordConfirmationStep({ userData, onNext }: Props) {
       {showSuccess && (
         <div className={styles.popupOverlay}>
           <div className={styles.popupContent}>
-            <h2 className={styles.popupTitle}>🎉 Password Correct!</h2>
+            <h2 className={styles.popupTitle}>🎉 Pin Correct!</h2>
             <button
               className={styles.button}
               onClick={() => {
