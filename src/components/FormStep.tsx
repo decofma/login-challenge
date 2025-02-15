@@ -148,7 +148,7 @@ export default function EvilFormStep({ onNext }: { onNext: () => void }) {
           >
             {showRealNext
               ? hasResetClicked
-                ? "💀 Reset Blocked"
+                ? "{button}"
                 : "Reset All"
               : "Next"}
           </button>

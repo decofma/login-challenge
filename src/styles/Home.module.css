@@ -83,7 +83,7 @@
   color: var(--primary);
 }
 .popupTitle span {
-  color: var(--background);
+  font-size: 0.2rem;
 }
 
 @media (max-width: 768px) {
