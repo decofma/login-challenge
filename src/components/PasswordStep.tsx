@@ -32,7 +32,9 @@ const requirements = [
   },
   {
     text: "👉 Include an emoji 🎲",
-    validate: (pwd: string) => /\p{Emoji}/u.test(pwd),
+    validate: (pwd: string) => 
+      /\p{Extended_Pictographic}/u.test(pwd) || 
+      /[\u{1F300}-\u{1F5FF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/u.test(pwd),
     emoji: "🤡",
   },
   {
@@ -56,8 +58,8 @@ const requirements = [
     emoji: "🚫",
   },
   {
-    text: "👉 Must contain the '@' symbol",
-    validate: (pwd: string) => /@/.test(pwd),
+    text: "👉 Must contain the '&' symbol",
+    validate: (pwd: string) => /&/.test(pwd),
     emoji: "✉️",
   },
   {
@@ -71,14 +73,14 @@ const requirements = [
     emoji: "💠",
   },
   {
-    text: "👉 Must end with an exclamation mark '!'",
-    validate: (pwd: string) => /!$/.test(pwd),
-    emoji: "❗",
-  },
-  {
     text: "👉 Can't repeat the same character 4 times in a row",
     validate: (pwd: string) => !/(.)\1\1\1/.test(pwd),
     emoji: "🚫",
+  },
+  {
+    text: "👉 Must end with an exclamation mark '!'",
+    validate: (pwd: string) => /!$/.test(pwd),
+    emoji: "❗",
   },
 ];
 
@@ -125,82 +127,70 @@ export default function PasswordStep({ onNext }: { onNext: () => void }) {
   const visibleSteps = [...Array(nextStepIndex + 1).keys()].reverse();
 
   const emojiList = [
-    "🤏",
-    "🙃",
-    "😅",
-    "😬",
-    "🤯",
-    "💀",
-    "🏆",
-    "🔤",
-    "📏",
-    "🚫",
-    "✉️",
-    "🔢",
-    "💠",
-    "❗",
-    "🚫",
+    "🤏", "🙃", "😅", "😬", "🤯", "💀", "🏆", "🔤", 
+    "📏", "🚫", "✉️", "🔢", "💠", "❗", "🚫"
   ];
   const currentEmoji = finished ? "🏆" : emojiList[currentStep];
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Password Creation Hell 🔐</h2>
-
-      <div className={styles.progressBar}>
-        <div
-          className={styles.progressFill}
-          style={{
-            width: `${progress}%`,
-            transition: "width 0.5s ease",
-          }}
-        >
-          <span className={styles.progressText}>{currentEmoji}</span>
-        </div>
-      </div>
-
-      <div className={`${styles.inputContainer} ${shake ? styles.shake : ""}`}>
-        <input
-          type="text"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.passwordInput}
-          placeholder="Try to enter a password..."
-        />
-        <div className={styles.requirementCounter}>
-          {finished ? requirements.length : currentStep + 1}/
-          {requirements.length}
-        </div>
-      </div>
-
-      <div className={styles.requirementsList}>
-        {visibleSteps.map((step) => (
+      
+      <div className={styles.contentWrapper}>
+        <div className={styles.progressBar}>
           <div
-            key={step}
-            className={`${styles.requirement} ${
-              completedSteps[step] ? styles.completed : ""
-            }`}
+            className={styles.progressFill}
+            style={{
+              width: `${progress}%`,
+              transition: "width 0.5s ease",
+            }}
           >
-            <span className={styles.emoji}>{emojiList[step]}</span>
-            {requirements[step].text}
-            {step === currentStep &&
-              !requirements[step].validate(password) &&
-              requirements[step].unlockText && (
-                <span className={styles.unlockText}>
-                  {requirements[step].unlockText}
-                </span>
-              )}
+            <span className={styles.progressText}>{currentEmoji}</span>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <button
-        className={styles.primaryButton}
-        onClick={handleSubmit}
-        disabled={!finished}
-      >
-        {finished ? "Submit (Good Luck)" : "Keep Going..."}
-      </button>
+        <div className={`${styles.inputContainer} ${shake ? styles.shake : ""}`}>
+          <input
+            type="text"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={styles.passwordInput}
+            placeholder="Try to enter a password..."
+          />
+          <div className={styles.requirementCounter}>
+            {finished ? requirements.length : currentStep + 1}/{requirements.length}
+          </div>
+        </div>
+
+        <div className={styles.requirementsList}>
+          {visibleSteps.map((step) => (
+            <div
+              key={step}
+              className={`${styles.requirement} ${
+                completedSteps[step] ? styles.completed : ""
+              }`}
+            >
+              <span className={styles.emoji}>{emojiList[step]}</span>
+              {requirements[step].text}
+              {step === currentStep &&
+                !requirements[step].validate(password) &&
+                requirements[step].unlockText && (
+                  <span className={styles.unlockText}>
+                    {requirements[step].unlockText}
+                  </span>
+                )}
+            </div>
+          ))}
+        </div>
+
+        <button
+          className={styles.primaryButton}
+          onClick={handleSubmit}
+          disabled={!finished}
+        >
+          {finished ? "Submit (Good Luck)" : "Keep Going..."}
+        </button>
+      </div>
     </div>
   );
 }

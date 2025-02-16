@@ -23,7 +23,7 @@ export default function Home() {
   });
 
   const steps = [
-    <HomePage key={0} onNext={() => setStep(11)} />,
+    <HomePage key={0} onNext={() => setStep(7)} />,
     <VerificationStep key={1} onNext={() => setStep(2)} />,
     <UsernameStep key={2} userData={userData} setUserData={setUserData} onNext={() => setStep(3)}/>,
     <EmailStep key={3} userData={userData} setUserData={setUserData} onNext={() => setStep(4)}/>,
@@ -36,6 +36,5 @@ export default function Home() {
     <TermsStep key={10} onNext={() => setStep(11)} />,
     <FinalStep key={11} />,
   ];
-
   return <main>{steps[step]}</main>;
 }

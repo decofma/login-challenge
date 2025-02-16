@@ -95,13 +95,13 @@
   transform: scale(1.1) rotate(3deg);
 }
 
-.agreeButton::after {
+/* .agreeButton::after {
   content: "⚠️";
   position: absolute;
   right: -20px;
   top: -10px;
   font-size: 2rem;
-}
+} */
 
 .disabled {
   opacity: 0.5;

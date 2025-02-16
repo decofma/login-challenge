@@ -150,12 +150,19 @@
   }
   .stats {
     gap: 1rem;
+    display: grid;
     margin-bottom: 1rem;
+  }
+  .stat {
+    padding: 1rem;
   }
   .number {
     font-size: 2rem;
   }
   .label {
+    font-size: 0.8rem;
+  }
+  .achievement{
     font-size: 0.8rem;
   }
 }
