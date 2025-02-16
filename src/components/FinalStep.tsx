@@ -6,13 +6,15 @@ export default function FinalStep() {
   const [achievements, setAchievements] = useState<string[]>([]);
 
   useEffect(() => {
-    // Simular carregamento de conquistas
     const fakeAchievements = [
-      "Survived the Terms of Service",
-      "Passed the CAPTCHA Gauntlet",
-      "Memorized 10 New Passwords",
-      "Verified as 0.3% Human",
       'Earned "Masochist of the Year" Award',
+      "Verified as 0.3% Human",
+      "Created a weird username",
+      "Solvend the pin puzzle",
+      "Managed to type your birthdate",
+      "Memorized 10 New Passwords",
+      "Completed 0% of the Form",
+      "Survived the Terms of Service",
     ];
 
     const timeout = setTimeout(() => {
@@ -20,32 +22,6 @@ export default function FinalStep() {
     }, 2000);
 
     return () => clearTimeout(timeout);
-  }, []);
-
-  const handleConfetti = () => {
-    const colors = ["#ff69b4", "#7b68ee", "#55ff55"];
-    for (let i = 0; i < 150; i++) {
-      const confetti = document.createElement("div");
-      confetti.style.position = "fixed";
-      confetti.style.width = "10px";
-      confetti.style.height = "10px";
-      confetti.style.backgroundColor =
-        colors[Math.floor(Math.random() * colors.length)];
-      confetti.style.left = Math.random() * 100 + "vw";
-      confetti.style.top = "-10px";
-      confetti.style.borderRadius = "50%";
-      confetti.style.animation = `fall ${Math.random() * 3 + 2}s linear`;
-      document.body.appendChild(confetti);
-
-      setTimeout(() => confetti.remove(), 5000);
-    }
-  };
-
-  useEffect(() => {
-    handleConfetti();
-    const audio = new Audio("/sounds/parabains.mp3");
-    audio.play();
-
   }, []);
 
   return (
@@ -86,7 +62,6 @@ export default function FinalStep() {
           ⚡ Try Again (Why?)
         </button>
       </div>
-
     </div>
   );
 }
